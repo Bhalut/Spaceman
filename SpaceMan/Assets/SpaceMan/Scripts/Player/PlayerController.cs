@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private const string STATE_ALIVE = "isAlive";
     private const string STATE_GROUND = "isGround";
+    private const string STATE_DIE = "isDie";
 
     private void Awake()
     {
@@ -73,4 +74,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private bool IsTouchingOnTheGround() => Physics2D.Raycast(transform.position, Vector2.down, 1.45f, groundMask);
+
+    public void Die()
+    {
+        anim.SetTrigger(STATE_DIE);
+        anim.SetBool(STATE_ALIVE, false);
+        GameManager.instance.GameOver();
+    }
 }
