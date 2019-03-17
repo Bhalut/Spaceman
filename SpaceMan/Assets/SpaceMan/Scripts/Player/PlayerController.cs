@@ -17,13 +17,11 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    // Start is called before the first frame update
     private void Start()
     {
         Init();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         isJump = Input.GetKeyDown(KeyCode.Space);
@@ -36,15 +34,23 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (rb.velocity.x < speed)
+        if (GameManager.instance.state == GameState.InGame)
         {
-            rb.velocity = new Vector2(speed, rb.velocity.y);
+            if (rb.velocity.x < speed)
+            {
+                rb.velocity = new Vector2(speed, rb.velocity.y);
+            }
+
+            if (isJump)
+            {
+                Jump();
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
 
-        if (isJump)
-        {
-            Jump();
-        }
     }
 
     private void State()
