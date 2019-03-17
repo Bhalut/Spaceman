@@ -73,6 +73,12 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetBool(STATE_ALIVE, true);
         anim.SetBool(STATE_GROUND, false);
+
+        Invoke("RestartPosition", 0.1f);
+    }
+
+    private void RestartPosition()
+    {
         this.transform.position = startPosition;
         this.rb.velocity = Vector2.zero;
     }
