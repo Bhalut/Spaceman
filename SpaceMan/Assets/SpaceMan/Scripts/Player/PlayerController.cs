@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     public LayerMask groundMask;
     private Animator anim;
+    private Vector2 startPosition;
     private const string STATE_ALIVE = "isAlive";
     private const string STATE_GROUND = "isGround";
     private const string STATE_DIE = "isDie";
@@ -20,13 +21,14 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        startPosition = this.transform.position;
         Init();
     }
 
     private void Update()
     {
         isJump = Input.GetKeyDown(KeyCode.Space);
-       
+
 
         State();
 
@@ -67,10 +69,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Init()
+    public void Init()
     {
         anim.SetBool(STATE_ALIVE, true);
         anim.SetBool(STATE_GROUND, false);
+        this.transform.position = startPosition;
+        this.rb.velocity = Vector2.zero;
     }
 
     private bool IsTouchingOnTheGround() => Physics2D.Raycast(transform.position, Vector2.down, 1.45f, groundMask);
