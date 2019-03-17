@@ -5,6 +5,7 @@ public sealed class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public GameState state;
+    private PlayerController player;
 
     private void Awake()
     {
@@ -12,6 +13,8 @@ public sealed class GameManager : MonoBehaviour
         {
             instance = this;
         }
+
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
     }
 
     private void Start()
@@ -21,15 +24,18 @@ public sealed class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (state != GameState.InGame)
         {
-            StartGame();
+            if (Input.GetKey(KeyCode.S))
+            {
+                StartGame();
+            }
         }
     }
 
     private void Init()
     {
-        state = GameState.Menu;
+        SetGameState(GameState.Menu);
     }
 
     public void StartGame()
@@ -54,6 +60,7 @@ public sealed class GameManager : MonoBehaviour
             case GameState.Menu:
                 break;
             case GameState.InGame:
+                player.Init();
                 break;
             case GameState.GameOver:
                 break;
