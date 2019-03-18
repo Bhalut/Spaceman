@@ -60,6 +60,8 @@ public sealed class GameManager : MonoBehaviour
             case GameState.Menu:
                 break;
             case GameState.InGame:
+                LevelManager.instance.RemoveAllLevelBlock();
+                LevelManager.instance.GenerateInitBlock();
                 player.Init();
                 break;
             case GameState.GameOver:
