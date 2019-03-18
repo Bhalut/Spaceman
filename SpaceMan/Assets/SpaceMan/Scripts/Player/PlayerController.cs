@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
         anim.SetBool(STATE_GROUND, false);
 
         Invoke("RestartPosition", 0.1f);
+
+        GameObject cam = GameObject.FindWithTag("MainCamera");
+        cam.GetComponent<CameraController>().ResetCameraPosition();
     }
 
     private void RestartPosition()
