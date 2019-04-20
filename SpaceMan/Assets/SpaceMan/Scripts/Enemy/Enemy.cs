@@ -4,8 +4,9 @@ public class Enemy : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Vector2 startPosition;
-    private float speed;
-    private bool facingRight;
+    private float speed = 1.5f;
+    private int damage = 10;
+    private bool facingRight = false;
 
     private void Awake()
     {
@@ -33,14 +34,27 @@ public class Enemy : MonoBehaviour
             this.transform.eulerAngles = Vector2.zero;
         }
 
-        rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
+
+        if (GameManager.instance.state == GameState.InGame)
+        {
+            rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            //Die
+            collision.gameObject.GetComponent<PlayerController>().
+                     CollectHealth(-damage);
+            return;
         }
+
+        if (collision.CompareTag("Coin"))
+        {
+            return;
+        }
+
+        facingRight = !facingRight;
     }
 }
