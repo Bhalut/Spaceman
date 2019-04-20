@@ -3,7 +3,7 @@
 public class UiManager : MonoBehaviour
 {
     public static UiManager instance;
-    public Canvas canvas;
+    public Canvas menuCanvas, gameCanvas, gameOverCanvas;
 
     private void Awake()
     {
@@ -12,15 +12,34 @@ public class UiManager : MonoBehaviour
             instance = this;
         }
     }
-
     public void ShowMainMenu()
     {
-        canvas.enabled = true;
+        menuCanvas.enabled = true;
     }
 
     public void HideMainMenu()
     {
-        canvas.enabled = false;
+        menuCanvas.enabled = false;
+    }
+
+    public void ShowGameMenu()
+    {
+        gameCanvas.enabled = true;
+    }
+
+    public void HideGameMenu()
+    {
+        gameCanvas.enabled = false;
+    }
+
+    public void ShowGameOverMenu()
+    {
+        gameOverCanvas.enabled = true;
+    }
+
+    public void HideGameOverMenu()
+    {
+        gameOverCanvas.enabled = false;
     }
 
     public void ExitGame()
