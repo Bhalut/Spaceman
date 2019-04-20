@@ -2,12 +2,10 @@
 
 public class KillZone : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            PlayerController player = other.GetComponent<PlayerController>();
-            player.Die();
-        }
+        if (!other.CompareTag("Player")) return;
+        var player = other.GetComponent<PlayerController>();
+        player.Die();
     }
 }
