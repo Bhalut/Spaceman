@@ -10,10 +10,17 @@ public class Collectable : MonoBehaviour
 
     public int value = 1;
 
+    private GameObject player;
+
     private void Awake()
     {
         sprite = GetComponent<SpriteRenderer>();
         circleCollider = GetComponent<CircleCollider2D>();
+    }
+
+    private void Start()
+    {
+        player = GameObject.FindWithTag("Player");
     }
 
     private void Show()
@@ -38,10 +45,14 @@ public class Collectable : MonoBehaviour
         switch (type)
         {
             case CollectableType.Coin:
+                GameManager.instance.CollectObject(this);
+                GetComponent<AudioSource>().Play();
                 break;
             case CollectableType.HealthPotion:
+                player.GetComponent<PlayerController>().CollectHealth(this.value);
                 break;
             case CollectableType.ManaPotion:
+                player.GetComponent<PlayerController>().CollectMana(this.value);
                 break;
             default:
                 goto case CollectableType.Coin;
